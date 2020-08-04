@@ -64,7 +64,7 @@
                             <goal>schema</goal>
                         </goals>
                         <configuration>
-                            <sourceDirectory>${project.basedir}/src/test/resources/avro/</sourceDirectory>
+                            <sourceDirectory>${project.basedir}/src/test/resources/avro_schemas/</sourceDirectory>
                             <outputDirectory>${project.basedir}/target/generated-test-sources/</outputDirectory>
                         </configuration>
                     </execution>

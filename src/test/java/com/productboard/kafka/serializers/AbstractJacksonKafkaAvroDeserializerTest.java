@@ -57,13 +57,6 @@ class AbstractJacksonKafkaAvroDeserializerTest {
     }
 
     static Stream<Arguments> basicTypes() {
-        return Stream.of(
-                Arguments.of((Object) null),
-                Arguments.of("test"),
-                Arguments.of(1),
-                Arguments.of(3.14f),
-                Arguments.of(3.14d),
-                Arguments.of(2L)
-        );
+        return TestData.basicTypes();
     }
 }

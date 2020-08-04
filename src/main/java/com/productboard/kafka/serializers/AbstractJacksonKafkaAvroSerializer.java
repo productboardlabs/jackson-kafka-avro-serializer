@@ -26,6 +26,7 @@ public abstract class AbstractJacksonKafkaAvroSerializer extends AbstractKafkaSc
     private final Map<String, Schema> primitiveSchemas = AvroSchemaUtils.getPrimitiveSchemas();
 
     private final AvroMapper mapper = createAvroMapper();
+    private boolean autoRegisterSchema;
 
     protected abstract SchemaMetadata getSchemaFor(String topic, Object object);
 
@@ -36,18 +37,15 @@ public abstract class AbstractJacksonKafkaAvroSerializer extends AbstractKafkaSc
 
     @Override
     public void configure(Map<String, ?> configs, boolean isKey) {
-        this.configureClientProperties(new AbstractKafkaSchemaSerDeConfig(baseConfigDef(), configs), new AvroSchemaProvider());
+        AbstractKafkaSchemaSerDeConfig config = new AbstractKafkaSchemaSerDeConfig(baseConfigDef(), configs);
+        this.configureClientProperties(config, new AvroSchemaProvider());
+        this.autoRegisterSchema = config.autoRegisterSchema();
     }
 
     @Override
     public byte[] serialize(String topic, Object data) {
         SchemaMetadata schema = getSchema(topic, data);
-        int schemaId;
-        try {
-            schemaId = schemaRegistry.register(schema.getSubject(), schema.getSchema());
-        } catch (Exception e) {
-            throw new SerializationException("Can not fetch schema", e);
-        }
+        int schemaId = getSchemaId(schema);
 
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             baos.write(MAGIC_BYTE);
@@ -59,12 +57,24 @@ public abstract class AbstractJacksonKafkaAvroSerializer extends AbstractKafkaSc
         }
     }
 
-    private void write(Object data, Schema schema, ByteArrayOutputStream baos) throws IOException {
+    private int getSchemaId(SchemaMetadata schema) {
+        try {
+            if (autoRegisterSchema) {
+                return schemaRegistry.register(schema.getSubject(), schema.getSchema());
+            } else {
+                return schemaRegistry.getId(schema.getSubject(), schema.getSchema());
+            }
+        } catch (Exception e) {
+            throw new SerializationException("Can not fetch schema", e);
+        }
+    }
+
+    private void write(Object data, Schema schema, ByteArrayOutputStream out) throws IOException {
         if (isPrimitive(data)) {
             new GenericDatumWriter<>(schema, GenericData.get())
-                    .write(data, EncoderFactory.get().directBinaryEncoder(baos, null));
+                    .write(data, EncoderFactory.get().directBinaryEncoder(out, null));
         } else {
-            mapper.writer(new AvroSchema(schema)).writeValue(baos, data);
+            mapper.writer(new AvroSchema(schema)).writeValue(out, data);
         }
     }
 

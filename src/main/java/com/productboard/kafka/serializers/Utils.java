@@ -11,7 +11,7 @@ class Utils {
         try {
             try (InputStream resource = Thread.currentThread().getContextClassLoader().getResourceAsStream(path)) {
                 if (resource == null) {
-                    throw new SerializationException("Can not find resource \""+path+"\" in class path.");
+                    throw new SerializationException("Can not find resource \"" + path + "\" in class path.");
                 }
                 return new Schema.Parser().parse(resource);
             }
