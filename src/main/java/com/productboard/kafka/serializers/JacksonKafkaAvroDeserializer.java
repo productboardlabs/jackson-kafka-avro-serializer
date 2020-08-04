@@ -21,7 +21,7 @@ import java.util.Map;
 
 import static io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.baseConfigDef;
 
-public class JacksonKafkaAvroDeserializer extends AbstractKafkaSchemaSerDe implements Deserializer<Object>  {
+public class JacksonKafkaAvroDeserializer extends AbstractKafkaSchemaSerDe implements Deserializer<Object> {
     private static final int MAGIC_BYTE_LENGTH = 1;
     private static final int SUBJECT_ID_LENGTH = Integer.BYTES;
 
@@ -65,7 +65,7 @@ public class JacksonKafkaAvroDeserializer extends AbstractKafkaSchemaSerDe imple
     @Override
     public void configure(Map<String, ?> configs, boolean isKey) {
         this.configureClientProperties(new AbstractKafkaSchemaSerDeConfig(baseConfigDef(), configs), new AvroSchemaProvider());
-        this.deserializationMapping= getDeserializationMapping();
+        this.deserializationMapping = getDeserializationMapping();
     }
 
     @Override
