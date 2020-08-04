@@ -4,6 +4,7 @@ package com.productboard.kafka.serializers;
 import example.avro.User;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import org.apache.avro.Schema;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -14,12 +15,12 @@ import java.util.stream.Stream;
 import static com.productboard.kafka.serializers.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class JacksonKafkaAvroDeserializerTest {
-    private final JacksonKafkaAvroDeserializer deserializer;
+class AbstractJacksonKafkaAvroDeserializerTest {
+    private final AbstractJacksonKafkaAvroDeserializer deserializer;
     private final KafkaAvroSerializer standardSerializer;
 
-    JacksonKafkaAvroDeserializerTest() {
-        this.deserializer = new JacksonKafkaAvroDeserializer() {
+    AbstractJacksonKafkaAvroDeserializerTest() {
+        this.deserializer = new AbstractJacksonKafkaAvroDeserializer() {
             @Override
             protected DeserializationMapping getDeserializationMapping() {
                 return new TestDeserializationMapping();
@@ -34,12 +35,12 @@ class JacksonKafkaAvroDeserializerTest {
 
     @Test
     void shouldDeserializeNull() {
-        assertThat(deserializer.deserialize(null, null)).isNull();
+        assertThat(deserializer.deserialize(topic, null)).isNull();
     }
 
     @Test
     void shouldDeserializeObject() {
-        byte[] payload = standardSerializer.serialize(null, generatedUser);
+        byte[] payload = standardSerializer.serialize(topic, generatedUser);
         assertThat(deserializer.deserialize("generated", payload)).isEqualTo(generatedUser);
         assertThat(deserializer.deserialize("simple", payload)).isEqualTo(simpleUser);
     }
@@ -47,8 +48,8 @@ class JacksonKafkaAvroDeserializerTest {
     @ParameterizedTest
     @MethodSource("basicTypes")
     void shouldDeserializePrimitive(Object value) {
-        byte[] payload = standardSerializer.serialize(null, value);
-        assertThat(deserializer.deserialize(null, payload)).isEqualTo(value);
+        byte[] payload = standardSerializer.serialize(topic, value);
+        assertThat(deserializer.deserialize(topic, payload)).isEqualTo(value);
     }
 
     static Stream<Arguments> basicTypes() {
@@ -65,7 +66,7 @@ class JacksonKafkaAvroDeserializerTest {
     static class TestDeserializationMapping implements DeserializationMapping {
 
         @Override
-        public Class<?> getClassFor(String topic, Schema schema) {
+        public @NotNull Class<?> getClassFor(@NotNull String topic, @NotNull Schema schema) {
             if ("generated".equals(topic)) {
                 return User.class;
             } else {

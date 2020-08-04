@@ -3,6 +3,7 @@ package com.productboard.kafka.serializers;
 
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import org.apache.avro.Schema;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,12 +17,12 @@ import static com.productboard.kafka.serializers.TestData.*;
 import static io.confluent.kafka.serializers.KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class JacksonKafkaAvroSerializerTest {
-    private final JacksonKafkaAvroSerializer serializer;
+class AbstractJacksonKafkaAvroSerializerTest {
+    private final AbstractJacksonKafkaAvroSerializer serializer;
     private final KafkaAvroDeserializer standardDeserializer;
 
-    JacksonKafkaAvroSerializerTest() {
-        this.serializer = new JacksonKafkaAvroSerializer() {
+    AbstractJacksonKafkaAvroSerializerTest() {
+        this.serializer = new AbstractJacksonKafkaAvroSerializer() {
             @Override
             protected SerializationMapping getSerializationMapping() {
                 return new TestSerializationMapping();
@@ -39,14 +40,14 @@ class JacksonKafkaAvroSerializerTest {
     @ParameterizedTest
     @MethodSource("basicTypes")
     void shouldSerializePrimitive(Object value) {
-        byte[] payload = serializer.serialize(null, value);
-        assertThat(standardDeserializer.deserialize(null, payload)).isEqualTo(value);
+        byte[] payload = serializer.serialize(topic, value);
+        assertThat(standardDeserializer.deserialize(topic, payload)).isEqualTo(value);
     }
 
     @Test
     void shouldSerializeObject() {
-        byte[] payload = serializer.serialize(null, simpleUser);
-        assertThat(standardDeserializer.deserialize(null, payload)).isEqualTo(generatedUser);
+        byte[] payload = serializer.serialize(topic, simpleUser);
+        assertThat(standardDeserializer.deserialize(topic, payload)).isEqualTo(generatedUser);
     }
     //TODO: Byte array
     // TODO: Use latest version
@@ -65,7 +66,7 @@ class JacksonKafkaAvroSerializerTest {
 
     private static class TestSerializationMapping implements SerializationMapping {
         @Override
-        public SchemaMetadata getSchemaFor(String topic, Object object) {
+        public @NotNull SchemaMetadata getSchemaFor(@NotNull String topic, @NotNull Object object) {
             return new SchemaMetadata(parseSchema("avro/sample.avsc"), "random");
         }
     }

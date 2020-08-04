@@ -13,6 +13,7 @@ import org.apache.avro.io.EncoderFactory;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Serializer;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -21,22 +22,25 @@ import java.util.Map;
 
 import static io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.baseConfigDef;
 
-public class JacksonKafkaAvroSerializer extends AbstractKafkaSchemaSerDe implements Serializer<Object> {
+public abstract class AbstractJacksonKafkaAvroSerializer extends AbstractKafkaSchemaSerDe implements Serializer<Object> {
     private final Map<String, Schema> primitiveSchemas = AvroSchemaUtils.getPrimitiveSchemas();
 
-    private final AvroMapper mapper = new AvroMapper();
+    private final AvroMapper mapper = createAvroMapper();
 
     private SerializationMapping serializationMapping;
+
+    @NotNull
+    protected abstract SerializationMapping getSerializationMapping();
+
+    @NotNull
+    protected AvroMapper createAvroMapper() {
+        return new AvroMapper();
+    }
 
     @Override
     public void configure(Map<String, ?> configs, boolean isKey) {
         this.configureClientProperties(new AbstractKafkaSchemaSerDeConfig(baseConfigDef(), configs), new AvroSchemaProvider());
         serializationMapping = getSerializationMapping();
-    }
-
-    protected SerializationMapping getSerializationMapping() {
-        // TODO:
-        return null;
     }
 
     @Override
@@ -57,7 +61,6 @@ public class JacksonKafkaAvroSerializer extends AbstractKafkaSchemaSerDe impleme
         } catch (IOException e) {
             throw new SerializationException("Can not serialize data", e);
         }
-
     }
 
     private void write(Object data, Schema schema, ByteArrayOutputStream baos) throws IOException {

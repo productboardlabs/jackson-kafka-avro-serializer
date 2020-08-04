@@ -12,6 +12,8 @@ class TestData {
 
     static final User generatedUser = new User();
 
+    static final String topic = "topic";
+
     static {
         generatedUser.setName("John");
         generatedUser.setFavoriteNumber(42);

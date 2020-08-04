@@ -1,6 +1,9 @@
 package com.productboard.kafka.serializers;
 
+import org.jetbrains.annotations.NotNull;
+
 public interface SerializationMapping {
-    public SchemaMetadata getSchemaFor(String topic, Object object);
+
+    @NotNull SchemaMetadata getSchemaFor(@NotNull String topic, @NotNull Object object);
 }
 

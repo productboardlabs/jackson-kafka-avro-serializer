@@ -14,6 +14,7 @@ import org.apache.avro.io.DecoderFactory;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Deserializer;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 import static io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.baseConfigDef;
 
-public class JacksonKafkaAvroDeserializer extends AbstractKafkaSchemaSerDe implements Deserializer<Object> {
+public abstract class AbstractJacksonKafkaAvroDeserializer extends AbstractKafkaSchemaSerDe implements Deserializer<Object> {
     private static final int MAGIC_BYTE_LENGTH = 1;
     private static final int SUBJECT_ID_LENGTH = Integer.BYTES;
 
@@ -30,10 +31,15 @@ public class JacksonKafkaAvroDeserializer extends AbstractKafkaSchemaSerDe imple
 
     private static final int PREFIX_LENGTH = MAGIC_BYTE_LENGTH + SUBJECT_ID_LENGTH;
 
-    public JacksonKafkaAvroDeserializer() {
+    public AbstractJacksonKafkaAvroDeserializer() {
         mapper = createAvroMapper();
     }
 
+
+    @NotNull
+    protected abstract DeserializationMapping getDeserializationMapping();
+
+    @NotNull
     protected AvroMapper createAvroMapper() {
         AvroMapper mapper = new AvroMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -91,10 +97,6 @@ public class JacksonKafkaAvroDeserializer extends AbstractKafkaSchemaSerDe imple
         } catch (IOException | RestClientException e) {
             throw new SerializationException("Error when deserializing", e);
         }
-    }
-
-    protected DeserializationMapping getDeserializationMapping() {
-        throw new IllegalStateException("TODO");
     }
 
     @Override
