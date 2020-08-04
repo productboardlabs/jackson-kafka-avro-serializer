@@ -27,7 +27,6 @@ public abstract class AbstractJacksonKafkaAvroDeserializer extends AbstractKafka
     private static final int SUBJECT_ID_LENGTH = Integer.BYTES;
 
     private final AvroMapper mapper;
-    private DeserializationMapping deserializationMapping;
 
     private static final int PREFIX_LENGTH = MAGIC_BYTE_LENGTH + SUBJECT_ID_LENGTH;
 
@@ -35,9 +34,7 @@ public abstract class AbstractJacksonKafkaAvroDeserializer extends AbstractKafka
         mapper = createAvroMapper();
     }
 
-
-    @NotNull
-    protected abstract DeserializationMapping getDeserializationMapping();
+    protected abstract Class<?> getClassFor(@NotNull String topic, @NotNull Schema schema);
 
     @NotNull
     protected AvroMapper createAvroMapper() {
@@ -71,7 +68,6 @@ public abstract class AbstractJacksonKafkaAvroDeserializer extends AbstractKafka
     @Override
     public void configure(Map<String, ?> configs, boolean isKey) {
         this.configureClientProperties(new AbstractKafkaSchemaSerDeConfig(baseConfigDef(), configs), new AvroSchemaProvider());
-        this.deserializationMapping = getDeserializationMapping();
     }
 
     @Override
@@ -90,7 +86,7 @@ public abstract class AbstractJacksonKafkaAvroDeserializer extends AbstractKafka
             if (isPrimitiveSchema(schema)) {
                 return deserializePrimitive(payload, schema, dataLength);
             } else {
-                return mapper.readerFor(deserializationMapping.getClassFor(topic, schema))
+                return mapper.readerFor(getClassFor(topic, schema))
                         .with(new AvroSchema(schema))
                         .readValue(payload, PREFIX_LENGTH, dataLength);
             }

@@ -27,10 +27,7 @@ public abstract class AbstractJacksonKafkaAvroSerializer extends AbstractKafkaSc
 
     private final AvroMapper mapper = createAvroMapper();
 
-    private SerializationMapping serializationMapping;
-
-    @NotNull
-    protected abstract SerializationMapping getSerializationMapping();
+    protected abstract SchemaMetadata getSchemaFor(String topic, Object object);
 
     @NotNull
     protected AvroMapper createAvroMapper() {
@@ -40,7 +37,6 @@ public abstract class AbstractJacksonKafkaAvroSerializer extends AbstractKafkaSc
     @Override
     public void configure(Map<String, ?> configs, boolean isKey) {
         this.configureClientProperties(new AbstractKafkaSchemaSerDeConfig(baseConfigDef(), configs), new AvroSchemaProvider());
-        serializationMapping = getSerializationMapping();
     }
 
     @Override
@@ -92,7 +88,7 @@ public abstract class AbstractJacksonKafkaAvroSerializer extends AbstractKafkaSc
         } else if (object instanceof CharSequence) {
             return getPrimitiveSchema("String");
         } else {
-            return serializationMapping.getSchemaFor(topic, object);
+            return getSchemaFor(topic, object);
         }
     }
 

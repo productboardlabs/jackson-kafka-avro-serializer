@@ -22,8 +22,12 @@ class AbstractJacksonKafkaAvroDeserializerTest {
     AbstractJacksonKafkaAvroDeserializerTest() {
         this.deserializer = new AbstractJacksonKafkaAvroDeserializer() {
             @Override
-            protected DeserializationMapping getDeserializationMapping() {
-                return new TestDeserializationMapping();
+            protected Class<?> getClassFor(@NotNull String topic, @NotNull Schema schema) {
+                if ("generated".equals(topic)) {
+                    return User.class;
+                } else {
+                    return SimpleUser.class;
+                }
             }
         };
         this.deserializer.configure(defaultConfig(), false);
@@ -61,17 +65,5 @@ class AbstractJacksonKafkaAvroDeserializerTest {
                 Arguments.of(3.14d),
                 Arguments.of(2L)
         );
-    }
-
-    static class TestDeserializationMapping implements DeserializationMapping {
-
-        @Override
-        public @NotNull Class<?> getClassFor(@NotNull String topic, @NotNull Schema schema) {
-            if ("generated".equals(topic)) {
-                return User.class;
-            } else {
-                return SimpleUser.class;
-            }
-        }
     }
 }

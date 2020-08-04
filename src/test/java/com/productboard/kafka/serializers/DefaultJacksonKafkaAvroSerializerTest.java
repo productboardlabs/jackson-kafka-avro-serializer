@@ -2,32 +2,25 @@ package com.productboard.kafka.serializers;
 
 
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
-import org.apache.avro.Schema;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.stream.Stream;
 
 import static com.productboard.kafka.serializers.TestData.*;
+import static com.productboard.kafka.serializers.Utils.parseSchema;
 import static io.confluent.kafka.serializers.KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class AbstractJacksonKafkaAvroSerializerTest {
+class DefaultJacksonKafkaAvroSerializerTest {
     private final AbstractJacksonKafkaAvroSerializer serializer;
     private final KafkaAvroDeserializer standardDeserializer;
 
-    AbstractJacksonKafkaAvroSerializerTest() {
-        this.serializer = new AbstractJacksonKafkaAvroSerializer() {
-            @Override
-            protected SerializationMapping getSerializationMapping() {
-                return new TestSerializationMapping();
-            }
-        };
+    DefaultJacksonKafkaAvroSerializerTest() {
+        this.serializer = new DefaultJacksonKafkaAvroSerializer();
         this.serializer.configure(defaultConfig(), false);
 
         Map<String, Object> config = defaultConfig();
@@ -62,20 +55,5 @@ class AbstractJacksonKafkaAvroSerializerTest {
                 Arguments.of(3.14d),
                 Arguments.of(2L)
         );
-    }
-
-    private static class TestSerializationMapping implements SerializationMapping {
-        @Override
-        public @NotNull SchemaMetadata getSchemaFor(@NotNull String topic, @NotNull Object object) {
-            return new SchemaMetadata(parseSchema("avro/sample.avsc"), "random");
-        }
-    }
-
-    private static Schema parseSchema(String name) {
-        try {
-            return new Schema.Parser().parse(Thread.currentThread().getContextClassLoader().getResourceAsStream(name));
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
     }
 }
