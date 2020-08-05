@@ -11,6 +11,7 @@ import java.io.InputStream;
 
 class Utils {
     private static final Logger logger = LoggerFactory.getLogger(Utils.class);
+
     static Schema parseSchema(String path) {
         try {
             try (InputStream resource = Thread.currentThread().getContextClassLoader().getResourceAsStream(path)) {

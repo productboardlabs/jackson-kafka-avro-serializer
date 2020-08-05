@@ -75,6 +75,8 @@ public abstract class AbstractJacksonKafkaAvroSerializer extends AbstractKafkaSc
         if (isPrimitive(data)) {
             new GenericDatumWriter<>(schema, GenericData.get())
                     .write(data, EncoderFactory.get().directBinaryEncoder(out, null));
+        } else if (data instanceof byte[]) {
+            out.write((byte[]) data);
         } else {
             mapper.writer(new AvroSchema(schema)).writeValue(out, data);
         }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.productboard</groupId>
@@ -9,7 +10,7 @@
 
     <name>jackson-kafka-avro-serializer</name>
     <url>https://github.com/productboardlabs/jackson-kafka-avro-serializer</url>
-    <description>Kafka Avro (de)serializer using Apache Jackson </description>
+    <description>Kafka Avro (de)serializer using Apache Jackson</description>
     <licenses>
         <license>
             <name>MIT</name>
@@ -152,14 +153,16 @@
         <repository>
             <id>bintray-productboardlabs</id>
             <name>productboardlabs-jackson-kafka-avro-serializer</name>
-            <url>https://api.bintray.com/maven/productboardlabs/maven-repo/jackson-kafka-avro-serializer/;publish=1</url>
+            <url>https://api.bintray.com/maven/productboardlabs/maven-repo/jackson-kafka-avro-serializer/;publish=1
+            </url>
         </repository>
     </distributionManagement>
 
     <scm>
         <connection>scm:git:git@github.com:productboardlabs/jackson-kafka-avro-serializer.git</connection>
-        <developerConnection>scm:git:git@github.com:productboardlabs/jackson-kafka-avro-serializer.git</developerConnection>
+        <developerConnection>scm:git:git@github.com:productboardlabs/jackson-kafka-avro-serializer.git
+        </developerConnection>
         <url>scm:git:git@github.com:productboardlabs/jackson-kafka-avro-serializer.git</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 </project>

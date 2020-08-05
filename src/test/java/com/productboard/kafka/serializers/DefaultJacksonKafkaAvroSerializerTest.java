@@ -54,6 +54,11 @@ class DefaultJacksonKafkaAvroSerializerTest {
     }
 
     @Test
+    void shouldSerializeByteArray() {
+        defaultSerializer().serialize(topic, new byte[]{1, 2, 3});
+    }
+
+    @Test
     void shouldSerializeObjectWithoutAutomaticSchemaRegistry() throws IOException, RestClientException {
         DefaultJacksonKafkaAvroSerializer serializer = new DefaultJacksonKafkaAvroSerializer();
         String schemaScope = "no-auto";
