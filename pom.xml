@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.productboard</groupId>
     <artifactId>jackson-kafka-avro-serializer</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
 
     <name>jackson-kafka-avro-serializer</name>
     <url>https://github.com/productboardlabs/jackson-kafka-avro-serializer</url>
@@ -161,5 +160,6 @@
         <connection>scm:git:git@github.com:productboardlabs/jackson-kafka-avro-serializer.git</connection>
         <developerConnection>scm:git:git@github.com:productboardlabs/jackson-kafka-avro-serializer.git</developerConnection>
         <url>scm:git:git@github.com:productboardlabs/jackson-kafka-avro-serializer.git</url>
-    </scm>
+      <tag>jackson-kafka-avro-serializer-0.0.2</tag>
+  </scm>
 </project>
