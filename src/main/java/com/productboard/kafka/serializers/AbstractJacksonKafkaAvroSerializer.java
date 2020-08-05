@@ -101,6 +101,8 @@ public abstract class AbstractJacksonKafkaAvroSerializer extends AbstractKafkaSc
             return getPrimitiveSchema("Double");
         } else if (object instanceof CharSequence) {
             return getPrimitiveSchema("String");
+        } else if (object instanceof byte[]) {
+            return getPrimitiveSchema("Bytes");
         } else {
             return getSchemaFor(topic, object);
         }
