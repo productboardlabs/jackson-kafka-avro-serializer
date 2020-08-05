@@ -6,11 +6,25 @@
 
     <groupId>com.productboard</groupId>
     <artifactId>jackson-kafka-avro-serializer</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <name>jackson-kafka-avro-serializer</name>
-    <!-- FIXME change it to the project's website -->
     <url>https://github.com/productboardlabs/jackson-kafka-avro-serializer</url>
+    <description>Kafka Avro (de)serializer using Apache Jackson </description>
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>lukas</id>
+            <name>Lukas Krecan</name>
+            <email>lukas@krecan.net</email>
+        </developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -142,4 +156,10 @@
             <url>https://api.bintray.com/maven/productboardlabs/maven-repo/jackson-kafka-avro-serializer/;publish=1</url>
         </repository>
     </distributionManagement>
+
+    <scm>
+        <connection>scm:git:git@github.com:productboardlabs/jackson-kafka-avro-serializer.git</connection>
+        <developerConnection>scm:git:git@github.com:productboardlabs/jackson-kafka-avro-serializer.git</developerConnection>
+        <url>scm:git:git@github.com:productboardlabs/jackson-kafka-avro-serializer.git</url>
+    </scm>
 </project>
