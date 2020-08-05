@@ -17,13 +17,14 @@ public class DefaultJacksonKafkaAvroSerializer extends AbstractJacksonKafkaAvroS
     }
 
     @Override
-    protected SchemaMetadata getSchemaFor(@NotNull String topic, @Nullable Object object) {
+    @NotNull
+    protected SchemaMetadata getSchemaFor(@NotNull String topic, @NotNull Object object) {
         String subjectName = getSubjectName(topic, isKey, object, null);
         return new SchemaMetadata(parseSchema(getPath(topic, object, subjectName)), subjectName);
     }
 
     @NotNull
-    protected String getPath(@NotNull String topic, @Nullable Object object, @NotNull String subjectName) {
+    protected String getPath(@NotNull String topic, @NotNull Object value, @NotNull String subjectName) {
         return "avro_schemas/" + subjectName + ".avsc";
     }
 }

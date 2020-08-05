@@ -28,7 +28,8 @@ public abstract class AbstractJacksonKafkaAvroSerializer extends AbstractKafkaSc
     private final AvroMapper mapper = createAvroMapper();
     private boolean autoRegisterSchema;
 
-    protected abstract SchemaMetadata getSchemaFor(String topic, Object object);
+    @NotNull
+    protected abstract SchemaMetadata getSchemaFor(@NotNull String topic, @NotNull Object value);
 
     @NotNull
     protected AvroMapper createAvroMapper() {
