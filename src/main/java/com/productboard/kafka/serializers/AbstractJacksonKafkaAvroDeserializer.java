@@ -38,7 +38,7 @@ public abstract class AbstractJacksonKafkaAvroDeserializer extends AbstractKafka
 
     @NotNull
     protected AvroMapper createAvroMapper() {
-        AvroMapper mapper = new AvroMapper();
+        AvroMapper mapper = Utils.createAvroMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return mapper;
     }

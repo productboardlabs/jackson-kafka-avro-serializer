@@ -32,7 +32,7 @@ public abstract class AbstractJacksonKafkaAvroSerializer extends AbstractKafkaSc
 
     @NotNull
     protected AvroMapper createAvroMapper() {
-        return new AvroMapper();
+        return Utils.createAvroMapper();
     }
 
     @Override
@@ -43,6 +43,7 @@ public abstract class AbstractJacksonKafkaAvroSerializer extends AbstractKafkaSc
     }
 
     @Override
+    @NotNull
     public byte[] serialize(String topic, Object data) {
         SchemaMetadata schema = getSchema(topic, data);
         int schemaId = getSchemaId(schema);
