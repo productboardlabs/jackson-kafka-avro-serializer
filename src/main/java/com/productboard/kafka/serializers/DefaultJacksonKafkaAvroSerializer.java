@@ -1,5 +1,8 @@
 package com.productboard.kafka.serializers;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Map;
 
 import static com.productboard.kafka.serializers.Utils.parseSchema;
@@ -14,8 +17,13 @@ public class DefaultJacksonKafkaAvroSerializer extends AbstractJacksonKafkaAvroS
     }
 
     @Override
-    protected SchemaMetadata getSchemaFor(String topic, Object object) {
+    protected SchemaMetadata getSchemaFor(@NotNull String topic, @Nullable Object object) {
         String subjectName = getSubjectName(topic, isKey, object, null);
-        return new SchemaMetadata(parseSchema("avro_schemas/" + subjectName + ".avsc"), subjectName);
+        return new SchemaMetadata(parseSchema(getPath(topic, object, subjectName)), subjectName);
+    }
+
+    @NotNull
+    protected String getPath(@NotNull String topic, @Nullable Object object, @NotNull String subjectName) {
+        return "avro_schemas/" + subjectName + ".avsc";
     }
 }
