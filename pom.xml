@@ -5,7 +5,7 @@
 
     <groupId>com.productboard</groupId>
     <artifactId>jackson-kafka-avro-serializer</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5-SNAPSHOT</version>
 
     <name>jackson-kafka-avro-serializer</name>
     <url>https://github.com/productboardlabs/jackson-kafka-avro-serializer</url>
@@ -162,6 +162,6 @@
         <developerConnection>scm:git:git@github.com:productboardlabs/jackson-kafka-avro-serializer.git
         </developerConnection>
         <url>scm:git:git@github.com:productboardlabs/jackson-kafka-avro-serializer.git</url>
-        <tag>jackson-kafka-avro-serializer-0.0.4</tag>
+        <tag>HEAD</tag>
     </scm>
 </project>
