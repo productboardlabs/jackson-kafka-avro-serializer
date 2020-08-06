@@ -16,7 +16,7 @@ we need to get the schema to use for serialization and subject to verify the sch
  
 ## DefaultJacksonKafkaAvroSerializer
 You can use `com.productboard.kafka.serializers.DefaultJacksonKafkaAvroSerializer` which uses [TopicNameStrategy](https://docs.confluent.io/current/schema-registry/serdes-develop/index.html#how-the-naming-strategies-work) to derive
-the subject and then it looks for 'avro_schemas/{subject}.avsc' file in your classpath. If you are sending messages to topic 'topic', it will try to load file `avro_schemas/topic-value.avsc`.
+the subject. Then it looks for `avro_schemas/{subject}.avsc` file in your classpath. If you are sending messages to topic 'topic', it will try to load the schema from `avro_schemas/topic-value.avsc`.
 See the  [source](https://github.com/productboardlabs/jackson-kafka-avro-serializer/blob/master/src/main/java/com/productboard/kafka/serializers/DefaultJacksonKafkaAvroSerializer.java) for details.
 
 Unfortunately, you can not use `RecordNameStrategy` or `TopicRecordNameStrategy` since we do not know the fully qualified name
