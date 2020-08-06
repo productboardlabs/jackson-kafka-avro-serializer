@@ -55,7 +55,7 @@ The package is available at JCenter.
     <dependency>
         <groupId>com.productboard</groupId>
         <artifactId>jackson-kafka-avro-serializer</artifactId>
-        <version>0.0.5</version>
+        <version>0.1.0</version>
     </dependency>
 </dependencies>
 ``` 
@@ -63,12 +63,13 @@ The package is available at JCenter.
 ## Gradle
 
 ```
-implementation("com.productboard:jackson-kafka-avro-serializer:0.0.5")
+implementation("com.productboard:jackson-kafka-avro-serializer:0.1.0")
 ```
  
  TODO:
  - Work without schema registry
  - Support for use latest version flag 
+ - Do not use deprecated methods from Kafka Avro serializer
 
 
 
