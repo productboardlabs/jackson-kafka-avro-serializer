@@ -29,7 +29,7 @@ schema resolution by yourself, it's quite easy, just implement the `getSchemaFor
 ## Deserialization
 When deserializing, we have the schema and the topic name for which we need to find the class to deserialize to.
 
-## DefaultJacksonKafkaAvroSerializer
+## DefaultJacksonKafkaAvroDeserializer
 `com.productboard.kafka.serializers.DefaultJacksonKafkaAvroDeserializer` takes the fully qualified record name and tries to
 deserialize to class with the same qualified name. If you need to change the class-name or package name, just override the
 `getClassName(String topic, Schema schema)` method.
