@@ -55,7 +55,7 @@ The package is available at JCenter.
     <dependency>
         <groupId>com.productboard</groupId>
         <artifactId>jackson-kafka-avro-serializer</artifactId>
-        <version>0.2.0</version>
+        <version>0.2.1</version>
     </dependency>
 </dependencies>
 ``` 
@@ -63,7 +63,7 @@ The package is available at JCenter.
 ## Gradle
 
 ```
-implementation("com.productboard:jackson-kafka-avro-serializer:0.2.0")
+implementation("com.productboard:jackson-kafka-avro-serializer:0.2.1")
 ```
  
  TODO:
