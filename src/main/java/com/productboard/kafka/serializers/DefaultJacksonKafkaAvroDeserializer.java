@@ -11,7 +11,7 @@ public class DefaultJacksonKafkaAvroDeserializer extends AbstractJacksonKafkaAvr
         try {
             return Class.forName(className);
         } catch (ClassNotFoundException e) {
-            throw new ClassNotFoundDeserializationException(className, topic, schema.getFullName());
+            throw new ClassNotFoundDeserializationException(className, topic);
         }
     }
 
