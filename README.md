@@ -55,7 +55,7 @@ The package is available at JCenter.
     <dependency>
         <groupId>com.productboard</groupId>
         <artifactId>jackson-kafka-avro-serializer</artifactId>
-        <version>0.2.1</version>
+        <version>0.3.0</version>
     </dependency>
 </dependencies>
 ``` 
