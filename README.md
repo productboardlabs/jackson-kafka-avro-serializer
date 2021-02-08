@@ -72,4 +72,9 @@ implementation("com.productboard:jackson-kafka-avro-serializer:0.2.1")
  - Do not use deprecated methods from Kafka Avro serializer
 
 
+# Release notes
+
+** 0.3.0 - Upgrade to kafka-avro-serializer 6.0.1
+
+
 
