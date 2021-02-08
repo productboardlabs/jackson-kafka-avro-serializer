@@ -63,7 +63,7 @@ The package is available at JCenter.
 ## Gradle
 
 ```
-implementation("com.productboard:jackson-kafka-avro-serializer:0.2.1")
+implementation("com.productboard:jackson-kafka-avro-serializer:0.3.0")
 ```
  
  TODO:
@@ -74,7 +74,7 @@ implementation("com.productboard:jackson-kafka-avro-serializer:0.2.1")
 
 # Release notes
 
-** 0.3.0 - Upgrade to kafka-avro-serializer 6.0.1
+### 0.3.0 - Upgrade to kafka-avro-serializer 6.0.1
 
 
 
