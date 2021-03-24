@@ -1,6 +1,6 @@
-package com.productboard.kafka.serializers
+package io.github.productboardlabs.kafka.serializers
 
-import com.productboard.kafka.serializers.TestData.topic
+import io.github.productboardlabs.kafka.serializers.TestData.topic
 import org.apache.avro.Schema
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -23,6 +23,6 @@ class KotlinTest {
 
 private class MyKotlinJacksonKafkaAvroDeserializer : DefaultJacksonKafkaAvroDeserializer() {
     override fun getClassName(topic: String, schema: Schema): String {
-        return "com.productboard.kafka.serializers.${schema.name}Kotlin"
+        return "io.github.productboardlabs.kafka.serializers.${schema.name}Kotlin"
     }
 }

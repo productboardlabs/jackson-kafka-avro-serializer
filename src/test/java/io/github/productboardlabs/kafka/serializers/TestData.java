@@ -1,4 +1,4 @@
-package com.productboard.kafka.serializers;
+package io.github.productboardlabs.kafka.serializers;
 
 import example.avro.User;
 import org.junit.jupiter.params.provider.Arguments;

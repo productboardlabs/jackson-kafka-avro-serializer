@@ -1,4 +1,4 @@
-package com.productboard.kafka.serializers;
+package io.github.productboardlabs.kafka.serializers;
 
 
 import io.confluent.kafka.schemaregistry.client.SchemaRegistryClient;
@@ -15,8 +15,11 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static com.productboard.kafka.serializers.TestData.*;
-import static com.productboard.kafka.serializers.Utils.parseSchema;
+import static io.github.productboardlabs.kafka.serializers.TestData.defaultConfig;
+import static io.github.productboardlabs.kafka.serializers.TestData.generatedUser;
+import static io.github.productboardlabs.kafka.serializers.TestData.simpleUser;
+import static io.github.productboardlabs.kafka.serializers.TestData.topic;
+import static io.github.productboardlabs.kafka.serializers.Utils.parseSchema;
 import static io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.AUTO_REGISTER_SCHEMAS;
 import static io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG;
 import static io.confluent.kafka.serializers.KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG;
