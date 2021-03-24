@@ -1,4 +1,4 @@
-package com.productboard.kafka.serializers
+package io.github.productboardlabs.kafka.serializers
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

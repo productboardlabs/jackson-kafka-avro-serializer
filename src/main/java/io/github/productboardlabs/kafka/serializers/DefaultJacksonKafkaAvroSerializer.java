@@ -1,10 +1,10 @@
-package com.productboard.kafka.serializers;
+package io.github.productboardlabs.kafka.serializers;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-import static com.productboard.kafka.serializers.Utils.parseSchema;
+import static io.github.productboardlabs.kafka.serializers.Utils.parseSchema;
 
 public class DefaultJacksonKafkaAvroSerializer extends AbstractJacksonKafkaAvroSerializer {
     private boolean isKey;

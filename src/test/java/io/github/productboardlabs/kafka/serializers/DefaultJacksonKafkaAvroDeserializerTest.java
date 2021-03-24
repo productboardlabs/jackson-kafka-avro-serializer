@@ -1,10 +1,12 @@
-package com.productboard.kafka.serializers;
+package io.github.productboardlabs.kafka.serializers;
 
 
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import org.junit.jupiter.api.Test;
 
-import static com.productboard.kafka.serializers.TestData.*;
+import static io.github.productboardlabs.kafka.serializers.TestData.defaultConfig;
+import static io.github.productboardlabs.kafka.serializers.TestData.generatedUser;
+import static io.github.productboardlabs.kafka.serializers.TestData.topic;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DefaultJacksonKafkaAvroDeserializerTest {

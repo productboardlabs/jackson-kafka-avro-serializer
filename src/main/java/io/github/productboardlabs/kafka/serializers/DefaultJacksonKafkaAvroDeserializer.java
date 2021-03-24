@@ -1,7 +1,6 @@
-package com.productboard.kafka.serializers;
+package io.github.productboardlabs.kafka.serializers;
 
 import org.apache.avro.Schema;
-import org.apache.kafka.common.errors.SerializationException;
 import org.jetbrains.annotations.NotNull;
 
 public class DefaultJacksonKafkaAvroDeserializer extends AbstractJacksonKafkaAvroDeserializer {

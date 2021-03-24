@@ -1,4 +1,4 @@
-package com.productboard.kafka.serializers;
+package io.github.productboardlabs.kafka.serializers;
 
 import org.apache.avro.Schema;
 import org.jetbrains.annotations.NotNull;

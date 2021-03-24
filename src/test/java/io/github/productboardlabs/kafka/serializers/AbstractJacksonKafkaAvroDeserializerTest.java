@@ -1,4 +1,4 @@
-package com.productboard.kafka.serializers;
+package io.github.productboardlabs.kafka.serializers;
 
 
 import example.avro.User;
@@ -12,7 +12,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static com.productboard.kafka.serializers.TestData.*;
+import static io.github.productboardlabs.kafka.serializers.TestData.defaultConfig;
+import static io.github.productboardlabs.kafka.serializers.TestData.generatedUser;
+import static io.github.productboardlabs.kafka.serializers.TestData.simpleUser;
+import static io.github.productboardlabs.kafka.serializers.TestData.topic;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class AbstractJacksonKafkaAvroDeserializerTest {
