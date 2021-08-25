@@ -6,6 +6,7 @@ import io.confluent.kafka.schemaregistry.client.rest.exceptions.RestClientExcept
 import io.confluent.kafka.schemaregistry.testutil.MockSchemaRegistry;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import org.apache.kafka.common.errors.SerializationException;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -63,15 +64,10 @@ class DefaultJacksonKafkaAvroSerializerTest {
 
     @Test
     void shouldSerializeObjectWithoutAutomaticSchemaRegistry() throws IOException, RestClientException {
-        DefaultJacksonKafkaAvroSerializer serializer = new DefaultJacksonKafkaAvroSerializer();
         String schemaScope = "no-auto";
-        String schemaRegistryUrl = "mock://" + schemaScope;
-        Map<String, Object> config = defaultConfig(schemaRegistryUrl);
-        config.put(SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl);
-        config.put(AUTO_REGISTER_SCHEMAS, false);
-        serializer.configure(config, false);
+        DefaultJacksonKafkaAvroSerializer serializer = defaultSerializerWithoutAutoSchemaRegistry(schemaScope);
 
-        // expect exeption - schema not registered
+        // expect exception - schema not registered
         assertThatThrownBy(() -> serializer.serialize(topic, simpleUser)).isInstanceOf(SerializationException.class);
 
         SchemaRegistryClient registryClient = MockSchemaRegistry.getClientForScope(schemaScope);
@@ -80,6 +76,23 @@ class DefaultJacksonKafkaAvroSerializerTest {
         // should pass - schema registered
         assertThat(serializer.serialize(topic, simpleUser)).isNotNull();
     }
+
+    @Test
+    void shouldSerializeNullWithoutAutoRegistration() {
+        byte[] payload = defaultSerializerWithoutAutoSchemaRegistry("no-auto").serialize(topic, null);
+        assertThat(standardDeserializer.deserialize(topic, payload)).isEqualTo(null);
+    }
+
+    private DefaultJacksonKafkaAvroSerializer defaultSerializerWithoutAutoSchemaRegistry(String schemaScope) {
+        DefaultJacksonKafkaAvroSerializer serializer = new DefaultJacksonKafkaAvroSerializer();
+        String schemaRegistryUrl = "mock://" + schemaScope;
+        Map<String, Object> config = defaultConfig(schemaRegistryUrl);
+        config.put(SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl);
+        config.put(AUTO_REGISTER_SCHEMAS, false);
+        serializer.configure(config, false);
+        return serializer;
+    }
+
 
     // TODO: Use latest version
     // TODO: Support byte-array

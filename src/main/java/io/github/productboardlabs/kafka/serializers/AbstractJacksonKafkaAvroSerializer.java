@@ -44,8 +44,10 @@ public abstract class AbstractJacksonKafkaAvroSerializer extends AbstractKafkaSc
     }
 
     @Override
-    @NotNull
     public byte[] serialize(String topic, Object data) {
+        if (data == null) {
+            return null;
+        }
         SchemaMetadata schema = getSchema(topic, data);
         int schemaId = getSchemaId(schema);
 

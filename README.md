@@ -48,7 +48,7 @@ The package is available at Maven Central.
     <dependency>
         <groupId>io.github.productboardlabs</groupId>
         <artifactId>jackson-kafka-avro-serializer</artifactId>
-        <version>0.4.0</version>
+        <version>0.5.0</version>
     </dependency>
 </dependencies>
 ``` 
@@ -56,7 +56,7 @@ The package is available at Maven Central.
 ## Gradle
 
 ```
-implementation("io.github.productboardlabs:jackson-kafka-avro-serializer:0.4.0")
+implementation("io.github.productboardlabs:jackson-kafka-avro-serializer:0.5.0")
 ```
  
  TODO:
@@ -67,7 +67,9 @@ implementation("io.github.productboardlabs:jackson-kafka-avro-serializer:0.4.0")
 
 # Release notes
 
-### 0.4.0 - Released to Maven cetntral - groupId and package name changed
+### 0.5.0 - Null can be serialized without auto schema registration 
+
+### 0.4.0 - Released to Maven central - groupId and package name changed
 
 ### 0.3.0 - Upgrade to kafka-avro-serializer 6.0.1
 
