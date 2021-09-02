@@ -64,9 +64,9 @@ public abstract class AbstractJacksonKafkaAvroSerializer extends AbstractKafkaSc
     private int getSchemaId(SchemaMetadata schema) {
         try {
             if (autoRegisterSchema) {
-                return schemaRegistry.register(schema.getSubject(), schema.getSchema());
+                return schemaRegistry.register(schema.getSubject(), new io.confluent.kafka.schemaregistry.avro.AvroSchema(schema.getSchema()));
             } else {
-                return schemaRegistry.getId(schema.getSubject(), schema.getSchema());
+                return schemaRegistry.getId(schema.getSubject(), new io.confluent.kafka.schemaregistry.avro.AvroSchema(schema.getSchema()));
             }
         } catch (Exception e) {
             throw new SerializationException("Can not fetch schema", e);
