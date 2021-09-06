@@ -67,6 +67,10 @@ implementation("io.github.productboardlabs:jackson-kafka-avro-serializer:0.5.0")
 
 # Release notes
 
+### 0.6.0 - Auto-register Jackson modules + do not use depracated methods
+
+### 0.5.1 - Update libraries
+
 ### 0.5.0 - Null can be serialized without auto schema registration 
 
 ### 0.4.0 - Released to Maven central - groupId and package name changed
