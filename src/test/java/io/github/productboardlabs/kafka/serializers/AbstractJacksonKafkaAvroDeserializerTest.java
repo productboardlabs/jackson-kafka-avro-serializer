@@ -1,6 +1,8 @@
 package io.github.productboardlabs.kafka.serializers;
 
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.dataformat.avro.AvroMapper;
 import example.avro.User;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import org.apache.avro.Schema;
@@ -26,11 +28,7 @@ class AbstractJacksonKafkaAvroDeserializerTest {
         this.deserializer = new AbstractJacksonKafkaAvroDeserializer() {
             @Override
             protected Class<?> getClassFor(@NotNull String topic, @NotNull Schema schema) {
-                if ("generated".equals(topic)) {
-                    return User.class;
-                } else {
-                    return SimpleUser.class;
-                }
+                return SimpleUser.class;
             }
         };
         this.deserializer.configure(defaultConfig(), false);
@@ -46,10 +44,30 @@ class AbstractJacksonKafkaAvroDeserializerTest {
     }
 
     @Test
-    void shouldDeserializeObject() {
+    void shouldDeserializeSimpleObject() {
+        byte[] payload = standardSerializer.serialize(topic, generatedUser);
+        assertThat(deserializer.deserialize("simple", payload)).isEqualTo(simpleUser);
+    }
+
+    @Test
+    void shouldDeserializeGeneratedObject() {
+        AbstractJacksonKafkaAvroDeserializer deserializer = new AbstractJacksonKafkaAvroDeserializer() {
+            @Override
+            protected Class<?> getClassFor(@NotNull String topic, @NotNull Schema schema) {
+                return User.class;
+            }
+
+            @Override
+            protected @NotNull AvroMapper createAvroMapper() {
+                AvroMapper mapper = super.createAvroMapper();
+                mapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
+                return mapper;
+            }
+        };
+        deserializer.configure(defaultConfig(), false);
+
         byte[] payload = standardSerializer.serialize(topic, generatedUser);
         assertThat(deserializer.deserialize("generated", payload)).isEqualTo(generatedUser);
-        assertThat(deserializer.deserialize("simple", payload)).isEqualTo(simpleUser);
     }
 
     @ParameterizedTest
