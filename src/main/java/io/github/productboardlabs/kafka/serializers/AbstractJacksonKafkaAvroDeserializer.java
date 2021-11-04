@@ -54,7 +54,7 @@ public abstract class AbstractJacksonKafkaAvroDeserializer extends AbstractKafka
     }
 
     private Schema getSchema(int schemaId) throws IOException, RestClientException {
-        return schemaRegistry.getById(schemaId);
+        return ((io.confluent.kafka.schemaregistry.avro.AvroSchema) schemaRegistry.getSchemaById(schemaId)).rawSchema();
     }
 
     private byte getMagicByte(byte[] payload) {
