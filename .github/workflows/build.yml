@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [1.8, 11, 17]
+        java: [8, 11, 17]
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK ${{ matrix.java }}
@@ -15,11 +15,6 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
           distribution: 'zulu'
-      - name: Cache Maven packages
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2
-          key: m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: m2
+          cache: 'maven'
       - name: Build with Maven
         run: mvn test javadoc:javadoc
