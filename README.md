@@ -67,6 +67,8 @@ implementation("io.github.productboardlabs:jackson-kafka-avro-serializer:0.5.0")
 
 # Release notes
 
+### 0.7.0 - Upgrade dependencies and remove use of deprecated methods
+
 ### 0.6.0 - Auto-register Jackson modules + do not use depracated methods
 
 ### 0.5.1 - Update libraries
