@@ -56,7 +56,7 @@ The package is available at Maven Central.
 ## Gradle
 
 ```
-implementation("io.github.productboardlabs:jackson-kafka-avro-serializer:0.5.0")
+implementation("io.github.productboardlabs:jackson-kafka-avro-serializer:0.7.0")
 ```
  
  TODO:
