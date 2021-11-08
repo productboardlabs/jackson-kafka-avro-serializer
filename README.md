@@ -48,7 +48,7 @@ The package is available at Maven Central.
     <dependency>
         <groupId>io.github.productboardlabs</groupId>
         <artifactId>jackson-kafka-avro-serializer</artifactId>
-        <version>0.5.0</version>
+        <version>0.7.0</version>
     </dependency>
 </dependencies>
 ``` 
