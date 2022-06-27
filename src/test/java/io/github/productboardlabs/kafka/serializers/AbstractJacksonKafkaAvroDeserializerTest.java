@@ -6,11 +6,13 @@ import com.fasterxml.jackson.dataformat.avro.AvroMapper;
 import example.avro.User;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import org.apache.avro.Schema;
+import org.apache.kafka.common.errors.SerializationException;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.platform.commons.util.StringUtils;
 
 import java.util.stream.Stream;
 
@@ -19,6 +21,7 @@ import static io.github.productboardlabs.kafka.serializers.TestData.generatedUse
 import static io.github.productboardlabs.kafka.serializers.TestData.simpleUser;
 import static io.github.productboardlabs.kafka.serializers.TestData.topic;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class AbstractJacksonKafkaAvroDeserializerTest {
     private final AbstractJacksonKafkaAvroDeserializer deserializer;
@@ -51,23 +54,25 @@ class AbstractJacksonKafkaAvroDeserializerTest {
 
     @Test
     void shouldDeserializeGeneratedObject() {
-        AbstractJacksonKafkaAvroDeserializer deserializer = new AbstractJacksonKafkaAvroDeserializer() {
-            @Override
-            protected Class<?> getClassFor(@NotNull String topic, @NotNull Schema schema) {
-                return User.class;
-            }
+        try (AbstractJacksonKafkaAvroDeserializer deserializer = new TestDeserializer()) {
+            deserializer.configure(defaultConfig(), false);
 
-            @Override
-            protected @NotNull AvroMapper createAvroMapper() {
-                AvroMapper mapper = super.createAvroMapper();
-                mapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
-                return mapper;
-            }
-        };
-        deserializer.configure(defaultConfig(), false);
+            byte[] payload = standardSerializer.serialize(topic, generatedUser);
+            assertThat(deserializer.deserialize("generated", payload)).isEqualTo(generatedUser);
+        }
+    }
 
-        byte[] payload = standardSerializer.serialize(topic, generatedUser);
-        assertThat(deserializer.deserialize("generated", payload)).isEqualTo(generatedUser);
+    @Test
+    void shouldFailOnTooLargeMessage() {
+        try (AbstractJacksonKafkaAvroDeserializer deserializer = new TestDeserializer()) {
+            deserializer.configure(defaultConfig(), false);
+
+            User user = new User();
+            user.setName("Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            byte[] payload = standardSerializer.serialize(topic, user);
+            assertThatThrownBy(() -> deserializer.deserialize("generated", payload))
+                    .isInstanceOf(SerializationException.class);
+        }
     }
 
     @ParameterizedTest
@@ -79,5 +84,23 @@ class AbstractJacksonKafkaAvroDeserializerTest {
 
     static Stream<Arguments> basicTypes() {
         return TestData.basicTypes();
+    }
+
+    private static class TestDeserializer extends AbstractJacksonKafkaAvroDeserializer {
+        public TestDeserializer() {
+            super(50);
+        }
+
+        @Override
+        protected Class<?> getClassFor(@NotNull String topic, @NotNull Schema schema) {
+            return User.class;
+        }
+
+        @Override
+        protected @NotNull AvroMapper createAvroMapper() {
+            AvroMapper mapper = super.createAvroMapper();
+            mapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
+            return mapper;
+        }
     }
 }

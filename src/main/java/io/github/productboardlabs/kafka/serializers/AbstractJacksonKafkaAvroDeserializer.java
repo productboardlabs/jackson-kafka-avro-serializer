@@ -30,11 +30,22 @@ public abstract class AbstractJacksonKafkaAvroDeserializer extends AbstractKafka
 
     private static final int PREFIX_LENGTH = MAGIC_BYTE_LENGTH + SUBJECT_ID_LENGTH;
 
+    /**
+     * Deserialization fails if message is larger than given size.
+     */
+    private final int maxMessageSize;
+
     public AbstractJacksonKafkaAvroDeserializer() {
+        this(Integer.MAX_VALUE);
+    }
+    public AbstractJacksonKafkaAvroDeserializer(int maxMessageSize) {
         mapper = createAvroMapper();
+        this.maxMessageSize = maxMessageSize;
     }
 
     protected abstract Class<?> getClassFor(@NotNull String topic, @NotNull Schema schema);
+
+
 
     @NotNull
     protected AvroMapper createAvroMapper() {
@@ -79,6 +90,11 @@ public abstract class AbstractJacksonKafkaAvroDeserializer extends AbstractKafka
         if (getMagicByte(payload) != MAGIC_BYTE) {
             throw new SerializationException("Unknown magic byte!");
         }
+
+        if (payload.length > maxMessageSize) {
+            throw new MessageTooLargeDeserializationException(topic, payload.length, maxMessageSize);
+        }
+
         int schemaId = getSchemaId(payload);
         try {
             Schema schema = getSchema(schemaId);

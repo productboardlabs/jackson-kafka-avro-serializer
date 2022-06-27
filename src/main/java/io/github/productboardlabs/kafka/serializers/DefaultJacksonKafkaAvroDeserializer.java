@@ -4,6 +4,14 @@ import org.apache.avro.Schema;
 import org.jetbrains.annotations.NotNull;
 
 public class DefaultJacksonKafkaAvroDeserializer extends AbstractJacksonKafkaAvroDeserializer {
+    public DefaultJacksonKafkaAvroDeserializer() {
+        super();
+    }
+
+    public DefaultJacksonKafkaAvroDeserializer(int maxMessageSize) {
+        super(maxMessageSize);
+    }
+
     @Override
     protected Class<?> getClassFor(@NotNull String topic, @NotNull Schema schema) {
         String className = getClassName(topic, schema);
