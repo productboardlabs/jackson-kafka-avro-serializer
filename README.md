@@ -64,6 +64,9 @@ implementation("io.github.productboardlabs:jackson-kafka-avro-serializer:0.7.1")
  - Support for use latest version flag 
  - Do not use deprecated methods from Kafka Avro serializer
 
+# Deploying of new release version
+
+To deploy a new release version to Maven Central, follow the [following guide](DEPLOYMENT.md).
 
 # Release notes
 
