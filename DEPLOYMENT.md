@@ -4,20 +4,20 @@ To release a new version, you need manually publish it to maven repository (Mave
 
 1. Set up and configure GPG key for generating a signature. See this [guide](https://central.sonatype.org/pages/working-with-pgp-signatures.html) 
 for more information.
-   2. Install GnuPG or jump to the next point. 
-   3. Using `gpg --list-signatures` check if you have a key. If not, generate one using `gpg --gen-key`.
-   4. During creation process, you will need to create a passphrase. This passphrase and your private key are all that 
+   1. Install GnuPG or jump to the next point. 
+   2. Using `gpg --list-signatures` check if you have a key. If not, generate one using `gpg --gen-key`.
+   3. During creation process, you will need to create a passphrase. This passphrase and your private key are all that
    is needed to sign artifacts with your signature.
-   2. Don't forget to add your public key to the [key server](https://central.sonatype.org/publish/requirements/gpg/#gpg-signed-components) 
-   so that others can verify your signature.
-   3. Set environment variable `GPG_TTY`:
-   ```
-   export GPG_TTY=$(tty)
-   ```
+   4. Don't forget to add your public key to the [key server](https://central.sonatype.org/publish/requirements/gpg/#gpg-signed-components) 
+      so that others can verify your signature.
+   5. Set environment variable `GPG_TTY`:
+      ```
+      export GPG_TTY=$(tty)
+      ```
 2. Configure account details to deploy to OSSRH
-   3. Find the configuration file for Maven - `settings.xml` file. It is located either in `~/.m2/settings.xml` 
+   1. Find the configuration file for Maven - `settings.xml` file. It is located either in `~/.m2/settings.xml` 
    (single user configuration) or in `/opt/homebrew/Cellar/maven/[version]/libexec/conf` (configuration for all Maven users on a machine).
-   4. Add the pb Jira Sonatype account credentials to the `settings.xml`:
+   2. Add the pb Jira Sonatype account credentials to the `settings.xml`:
     ```xml
     <settings>
       <servers>
@@ -29,7 +29,7 @@ for more information.
       </servers>
     </settings>
     ```
-   5. Add GPG passphrase to the `settings.xml`:
+   3. Add GPG passphrase to the `settings.xml`:
    ```xml
    <settings>
      <profiles>
