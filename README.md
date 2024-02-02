@@ -70,7 +70,7 @@ To deploy a new release version to Maven Central, follow the [following guide](D
 
 # Release notes
 
-### 0.9.0 - Provide possibility to override getSchemaById() (thanks @valentin-braun)
+### 0.9.1 - Provide possibility to override getSchemaById() (thanks @valentin-braun)
 
 ### 0.7.1 - Support for size limit in deserialization
 
