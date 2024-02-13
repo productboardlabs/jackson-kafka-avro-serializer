@@ -69,7 +69,10 @@ public abstract class AbstractJacksonKafkaAvroSerializer extends AbstractKafkaSc
                 return schemaRegistry.getId(schema.getSubject(), new io.confluent.kafka.schemaregistry.avro.AvroSchema(schema.getSchema()));
             }
         } catch (Exception e) {
-            throw new SerializationException("Can not fetch schema", e);
+            // The exact schema - including doc comments - must be present in the registry otherwise schema mismatch will be reported.
+            // schema.getSubject() is e.g. "$topic.$eventName", schema.getSchema() is Avro schema in service resources/JAR,
+            // both has to exact-match a schema in Schema registry.
+            throw new SerializationException("Can not fetch schema, not found at all or mismatch", e);
         }
     }
 
