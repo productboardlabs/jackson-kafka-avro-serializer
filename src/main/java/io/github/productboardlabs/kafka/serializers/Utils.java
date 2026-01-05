@@ -1,8 +1,8 @@
 package io.github.productboardlabs.kafka.serializers;
 
-import com.fasterxml.jackson.dataformat.avro.AvroMapper;
 import org.apache.avro.Schema;
 import org.apache.kafka.common.errors.SerializationException;
+import tools.jackson.dataformat.avro.AvroMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,9 +21,7 @@ class Utils {
         }
     }
 
-    static AvroMapper createAvroMapper() {
-        AvroMapper mapper = new AvroMapper();
-        mapper.findAndRegisterModules();
-        return mapper;
+    static AvroMapper.Builder createAvroMapperBuilder() {
+        return AvroMapper.builder().findAndAddModules();
     }
 }
