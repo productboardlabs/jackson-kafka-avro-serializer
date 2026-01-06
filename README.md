@@ -70,7 +70,7 @@ To deploy a new release version to Maven Central, follow the [following guide](D
 
 # Release notes
 
-### 0.10.0 - Upgrade of jackson to v 3
+### 0.10.0 - Upgrade of jackson to v 3, support for java lower than 17 dropped
 
 ### 0.9.2 - Provide possibility to override getSchemaById() - fixed (thanks @valentin-braun)
 
