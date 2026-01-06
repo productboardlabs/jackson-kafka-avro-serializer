@@ -27,8 +27,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.release>17</maven.compiler.release>
         <kotlin.version>2.1.0</kotlin.version>
         <jackson.version>3.0.3</jackson.version>
     </properties>
@@ -122,6 +121,7 @@
                                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
                                 <sourceDir>${project.basedir}/src/main/java</sourceDir>
                             </sourceDirs>
+                            <jvmTarget>17</jvmTarget>
                         </configuration>
                     </execution>
                     <execution>
@@ -134,6 +134,7 @@
                                 <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
                                 <sourceDir>${project.basedir}/src/test/java</sourceDir>
                             </sourceDirs>
+                            <jvmTarget>17</jvmTarget>
                         </configuration>
                     </execution>
                 </executions>
@@ -179,7 +180,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.11.2</version>
                 <configuration>
-                    <source>8</source>
+                    <source>17</source>
                 </configuration>
                 <executions>
                     <execution>
