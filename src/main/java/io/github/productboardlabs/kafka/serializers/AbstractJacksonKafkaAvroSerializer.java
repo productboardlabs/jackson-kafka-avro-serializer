@@ -1,7 +1,5 @@
 package io.github.productboardlabs.kafka.serializers;
 
-import com.fasterxml.jackson.dataformat.avro.AvroMapper;
-import com.fasterxml.jackson.dataformat.avro.AvroSchema;
 import io.confluent.kafka.schemaregistry.avro.AvroSchemaProvider;
 import io.confluent.kafka.schemaregistry.avro.AvroSchemaUtils;
 import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDe;
@@ -14,6 +12,8 @@ import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Serializer;
 import org.jetbrains.annotations.NotNull;
+import tools.jackson.dataformat.avro.AvroMapper;
+import tools.jackson.dataformat.avro.AvroSchema;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -33,7 +33,7 @@ public abstract class AbstractJacksonKafkaAvroSerializer extends AbstractKafkaSc
 
     @NotNull
     protected AvroMapper createAvroMapper() {
-        return Utils.createAvroMapper();
+        return Utils.createAvroMapperBuilder().build();
     }
 
     @Override

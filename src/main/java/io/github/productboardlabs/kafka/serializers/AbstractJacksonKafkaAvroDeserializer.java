@@ -1,8 +1,5 @@
 package io.github.productboardlabs.kafka.serializers;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.dataformat.avro.AvroMapper;
-import com.fasterxml.jackson.dataformat.avro.AvroSchema;
 import io.confluent.kafka.schemaregistry.avro.AvroSchemaProvider;
 import io.confluent.kafka.schemaregistry.avro.AvroSchemaUtils;
 import io.confluent.kafka.schemaregistry.client.rest.exceptions.RestClientException;
@@ -15,6 +12,9 @@ import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.jetbrains.annotations.NotNull;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.dataformat.avro.AvroMapper;
+import tools.jackson.dataformat.avro.AvroSchema;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -49,9 +49,10 @@ public abstract class AbstractJacksonKafkaAvroDeserializer extends AbstractKafka
 
     @NotNull
     protected AvroMapper createAvroMapper() {
-        AvroMapper mapper = Utils.createAvroMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return mapper;
+        return Utils
+                .createAvroMapperBuilder()
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .build();
     }
 
     private Object deserializePrimitive(byte[] payload, Schema schema, int dataLength) throws IOException {

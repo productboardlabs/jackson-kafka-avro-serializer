@@ -1,8 +1,6 @@
 package io.github.productboardlabs.kafka.serializers;
 
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.dataformat.avro.AvroMapper;
 import example.avro.User;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import org.apache.avro.Schema;
@@ -12,7 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.platform.commons.util.StringUtils;
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.dataformat.avro.AvroMapper;
 
 import java.util.stream.Stream;
 
@@ -98,9 +97,10 @@ class AbstractJacksonKafkaAvroDeserializerTest {
 
         @Override
         protected @NotNull AvroMapper createAvroMapper() {
-            AvroMapper mapper = super.createAvroMapper();
-            mapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
-            return mapper;
+            return Utils
+                    .createAvroMapperBuilder()
+                    .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
+                    .build();
         }
     }
 }

@@ -5,7 +5,7 @@
 
     <groupId>io.github.productboardlabs</groupId>
     <artifactId>jackson-kafka-avro-serializer</artifactId>
-    <version>0.9.2</version>
+    <version>0.10.0</version>
 
     <name>jackson-kafka-avro-serializer</name>
     <url>https://github.com/productboardlabs/jackson-kafka-avro-serializer</url>
@@ -27,10 +27,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <kotlin.version>2.1.0</kotlin.version>
-        <jackson.version>2.18.2</jackson.version>
+        <maven.compiler.release>17</maven.compiler.release>
+        <kotlin.version>2.3.0</kotlin.version>
+        <jackson.version>3.0.3</jackson.version>
     </properties>
 
     <dependencies>
@@ -45,12 +44,12 @@
             <version>1.12.0</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <groupId>tools.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-avro</artifactId>
             <version>${jackson.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
+            <groupId>tools.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>${jackson.version}</version>
         </dependency>
@@ -81,7 +80,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
+            <groupId>tools.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
             <version>${jackson.version}</version>
             <scope>test</scope>
@@ -122,6 +121,7 @@
                                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
                                 <sourceDir>${project.basedir}/src/main/java</sourceDir>
                             </sourceDirs>
+                            <jvmTarget>17</jvmTarget>
                         </configuration>
                     </execution>
                     <execution>
@@ -134,6 +134,7 @@
                                 <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
                                 <sourceDir>${project.basedir}/src/test/java</sourceDir>
                             </sourceDirs>
+                            <jvmTarget>17</jvmTarget>
                         </configuration>
                     </execution>
                 </executions>
@@ -179,7 +180,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.11.2</version>
                 <configuration>
-                    <source>8</source>
+                    <source>17</source>
                 </configuration>
                 <executions>
                     <execution>
