@@ -33,7 +33,12 @@ public abstract class AbstractJacksonKafkaAvroSerializer extends AbstractKafkaSc
 
     @NotNull
     protected AvroMapper createAvroMapper() {
-        return Utils.createAvroMapperBuilder().build();
+        return createAvroMapperBuilder().build();
+    }
+
+    @NotNull
+    protected AvroMapper.Builder createAvroMapperBuilder() {
+        return Utils.createAvroMapperBuilder();
     }
 
     @Override
