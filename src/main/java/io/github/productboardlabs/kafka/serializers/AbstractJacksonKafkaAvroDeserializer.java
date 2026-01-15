@@ -49,10 +49,17 @@ public abstract class AbstractJacksonKafkaAvroDeserializer extends AbstractKafka
 
     @NotNull
     protected AvroMapper createAvroMapper() {
+        return createAvroMapperBuilder().build();
+    }
+
+    /**
+     * A pre-configured AvroMapper builder that can be further customized in subclasses.
+     */
+    @NotNull
+    protected AvroMapper.Builder createAvroMapperBuilder() {
         return Utils
                 .createAvroMapperBuilder()
-                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                .build();
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     private Object deserializePrimitive(byte[] payload, Schema schema, int dataLength) throws IOException {
